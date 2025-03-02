@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - FastAPI Blog{% endblock %}
+
+{% block content %}
+<div class="blog-post-container">
+    <article class="blog-post">
+        <header class="post-header">
+            <h1 id="post-title" class="post-title">Loading post...</h1>
+            <div class="post-meta-container">
+                <p class="post-meta">Posted on <span id="post-date"></span></p>
+            </div>
+            <div class="post-divider"></div>
+        </header>
+        
+        <div id="post-content" class="post-content markdown-content">
+            <p>Loading content...</p>
+        </div>
+        
+        <div class="post-tags" id="post-tags">
+            <!-- 标签将在JavaScript中动态添加 -->
+        </div>
+    </article>
+    
+    <div class="post-actions">
+        <a href="/blog" class="btn btn-back"><span class="btn-icon">←</span> Back to Posts</a>
+        <a href="#" id="edit-post-btn" style="display: none;" class="btn btn-edit">Edit Post <span class="btn-icon">✏️</span></a>
+    </div>
+    
+    <div class="post-navigation" id="post-navigation">
+        <div class="prev-post" id="prev-post">
+            <!-- 上一篇文章链接将在JavaScript中动态添加 -->
+        </div>
+        <div class="next-post" id="next-post">
+            <!-- 下一篇文章链接将在JavaScript中动态添加 -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- 确保在这里直接引入 highlight.js -->
+<link rel="stylesheet" href="{{ url_for('static', path='/css/github.min.css') }}">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取帖子 ID
+    const urlParts = window.location.pathname.split('/');
+    const postId = urlParts[urlParts.length - 1];
+    
+    // 加载帖子
+    loadPost(postId);
+});
+
+async function loadPost(postId) {
+    try {
+        const token = localStorage.getItem('token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        
+        const response = await fetch(`/api/posts/${postId}`, {
+            headers: headers
+        });
+        
+        if (!response.ok) {
+            if (response.status === 404) {
+                document.getElementById('post-title').textContent = 'Post not found';
+                document.getElementById('post-content').innerHTML = 
+                    '<p>The post you are looking for does not exist.</p>';
+            } else {
+                throw new Error('Failed to fetch post');
+            }
+            return;
+        }
+        
+        const post = await response.json();
+        document.title = `${post.title} - FastAPI Blog`; // 更新页面标题
+        document.getElementById('post-title').textContent = post.title;
+        document.getElementById('post-date').textContent = 
+            new Date(post.created_at).toLocaleDateString();
+        
+        // 使用Marked.js渲染Markdown内容
+        document.getElementById('post-content').innerHTML = renderMarkdown(post.content);
+        
+        // 移除阅读时间计算和显示
+        
+        // 添加错误处理来初始化代码高亮
+        try {
+            // 检查 hljs 是否已定义
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block); // 注意：新版API使用highlightElement而不是highlightBlock
+                });
+            } else {
+                console.warn('Highlight.js 未加载，代码不会高亮显示');
+            }
+        } catch (highlightError) {
+            console.error('代码高亮出错:', highlightError);
+        }
+        
+        // 如果用户是管理员，显示编辑按钮
+        if (token) {
+            const userResponse = await fetch('/api/users/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            
+            if (userResponse.ok) {
+                const userData = await userResponse.json();
+                if (userData.is_admin) {
+                    const editBtn = document.getElementById('edit-post-btn');
+                    editBtn.href = `/admin/posts/${postId}/edit`;
+                    editBtn.style.display = 'inline-block';
+                }
+            }
+        }
+        
+        // 添加平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+    } catch (error) {
+        console.error('Error loading post:', error);
+        document.getElementById('post-title').textContent = 'Error';
+        document.getElementById('post-content').innerHTML = 
+            '<p>Error loading post. Please try again later.</p>';
+    }
+}
+</script>
+{% endblock %}

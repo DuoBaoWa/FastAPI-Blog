@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to FastAPI Blog{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to FastAPI Blog</h1>
+    <p>A modern blog platform built with FastAPI and Markdown support.</p>
+    <a href="/blog" class="btn">Read Blog</a>
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <h2>Fast & Modern</h2>
+        <p>Built with FastAPI, a modern, fast web framework for building APIs with Python.</p>
+    </div>
+    <div class="feature-card">
+        <h2>Markdown Support</h2>
+        <p>Write your posts in Markdown for rich formatting options.</p>
+    </div>
+    <div class="feature-card">
+        <h2>Easy Administration</h2>
+        <p>A simple admin interface for managing your blog posts.</p>
+    </div>
+</div>
+
+<div class="latest-posts">
+    <h2>Latest Posts</h2>
+    <div id="latest-posts-container">
+        <p>Loading latest posts...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 加载最新文章
+    loadLatestPosts();
+});
+
+async function loadLatestPosts() {
+    try {
+        const token = localStorage.getItem('token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        
+        const response = await fetch('/api/posts?limit=3', {
+            headers: headers
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch posts');
+        }
+        
+        const posts = await response.json();
+        const postsContainer = document.getElementById('latest-posts-container');
+        
+        if (posts.length === 0) {
+            postsContainer.innerHTML = '<p>No posts found.</p>';
+            return;
+        }
+        
+        let html = '';
+        posts.forEach(post => {
+            // 创建临时元素以去除HTML标签，获取纯文本预览
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = renderMarkdown(post.content);
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            const excerpt = textContent.substring(0, 100) + '...';
+            
+            html += `
+                <article class="post-card">
+                    <h3><a href="/blog/${post.id}">${post.title}</a></h3>
+                    <p class="post-meta">
+                        Posted on ${new Date(post.created_at).toLocaleDateString()}
+                    </p>
+                    <div class="post-excerpt">
+                        ${excerpt}
+                    </div>
+                    <a href="/blog/${post.id}" class="read-more">Read More</a>
+                </article>
+            `;
+        });
+        
+        postsContainer.innerHTML = html;
+    } catch (error) {
+        console.error('Error loading latest posts:', error);
+        document.getElementById('latest-posts-container').innerHTML = 
+            '<p>Error loading posts. Please try again later.</p>';
+    }
+}
+</script>
+{% endblock %}

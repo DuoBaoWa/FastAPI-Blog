@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Login - FastAPI Blog{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Login</h1>
+    <form id="login-form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Login</button>
+        </div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </form>
+    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+</div>
+
+<div class="form-container" id="register-form-container" style="display: none;">
+    <h1>Register</h1>
+    <form id="register-form">
+        <div class="form-group">
+            <label for="reg-username">Username</label>
+            <input type="text" id="reg-username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div>
+        <div id="reg-error-message" class="error-message" style="display: none;"></div>
+    </form>
+    <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+    const loginFormContainer = document.querySelector('.form-container');
+    const registerFormContainer = document.getElementById('register-form-container');
+    
+    // 显示注册表单
+    showRegister.addEventListener('click', function(e) {
+        e.preventDefault();
+        loginFormContainer.style.display = 'none';
+        registerFormContainer.style.display = 'block';
+    });
+    
+    // 显示登录表单
+    showLogin.addEventListener('click', function(e) {
+        e.preventDefault();
+        registerFormContainer.style.display = 'none';
+        loginFormContainer.style.display = 'block';
+    });
+    
+    // 处理登录
+    loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+        
+        try {
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
+            
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.detail || 'Login failed');
+            }
+            
+            // 保存令牌
+            localStorage.setItem('token', data.access_token);
+            
+            // 重定向到主页
+            window.location.href = '/';
+        } catch (error) {
+            errorMessage.textContent = error.message;
+            errorMessage.style.display = 'block';
+        }
+    });
+    
+    // 处理注册
+    registerForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('reg-username').value;
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-password').value;
+        const errorMessage = document.getElementById('reg-error-message');
+        
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.detail || 'Registration failed');
+            }
+            
+            // 注册成功，显示登录表单
+            registerFormContainer.style.display = 'none';
+            loginFormContainer.style.display = 'block';
+            
+            // 显示成功消息
+            alert('Registration successful! You can now login.');
+        } catch (error) {
+            errorMessage.textContent = error.message;
+            errorMessage.style.display = 'block';
+        }
+    });
+});
+</script>
+{% endblock %}

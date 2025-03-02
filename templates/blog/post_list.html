@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Blog Posts - FastAPI Blog{% endblock %}
+
+{% block content %}
+<div class="blog-posts">
+    <h1>Blog Posts</h1>
+    
+    <div id="posts-container">
+        <p>Loading posts...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 加载文章
+    loadPosts();
+});
+
+async function loadPosts() {
+    try {
+        const token = localStorage.getItem('token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        
+        const response = await fetch('/api/posts', {
+            headers: headers
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch posts');
+        }
+        
+        const posts = await response.json();
+        const postsContainer = document.getElementById('posts-container');
+        
+        if (posts.length === 0) {
+            postsContainer.innerHTML = '<p>No posts found.</p>';
+            return;
+        }
+        
+        let html = '';
+        posts.forEach(post => {
+            // 创建临时元素以去除HTML标签，获取纯文本预览
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = renderMarkdown(post.content);
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            const excerpt = textContent.substring(0, 200) + '...';
+            
+            html += `
+                <article class="post-card">
+                    <h2><a href="/blog/${post.id}">${post.title}</a></h2>
+                    <p class="post-meta">
+                        Posted on ${new Date(post.created_at).toLocaleDateString()}
+                    </p>
+                    <div class="post-excerpt">
+                        ${excerpt}
+                    </div>
+                    <a href="/blog/${post.id}" class="read-more">Read More</a>
+                </article>
+            `;
+        });
+        
+        postsContainer.innerHTML = html;
+    } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('posts-container').innerHTML = 
+            '<p>Error loading posts. Please try again later.</p>';
+    }
+}
+</script>
+{% endblock %}

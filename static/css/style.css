@@ -1,0 +1,2299 @@
+/* 重置和基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+    transition: all 0.3s ease;
+    scroll-behavior: smooth;
+}
+
+a {
+    color: #4a6cf7;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #2b4acb;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* 布局 */
+header {
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+    color: white;
+    padding: 1.2rem 0;
+    box-shadow: 0 4px 20px rgba(74, 108, 247, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+footer {
+    background: linear-gradient(135deg, #2b4acb 0%, #1a2f8a 100%);
+    color: white;
+    padding: 2rem 0;
+    box-shadow: 0 -4px 20px rgba(74, 108, 247, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+nav .logo a {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+nav .logo a:hover {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    height: 100%;
+}
+
+nav ul li {
+    margin-left: 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li a {
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: all 0.3s ease;
+    display: inline-block;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+nav ul li a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover {
+    transform: translateY(-2px);
+}
+
+nav ul li a:hover:after {
+    width: 100%;
+}
+
+main {
+    max-width: 95%;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+    min-height: calc(100vh - 180px);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+footer {
+    text-align: center;
+    padding: 2.5rem 0;
+}
+
+footer p {
+    margin: 1rem 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: white;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.3rem 0;
+}
+
+footer a:hover {
+    color: rgba(255, 255, 255, 1);
+    transform: translateY(-3px);
+}
+
+footer a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+footer a:hover:after {
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.footer-copyright {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* 表单样式 */
+.form-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 80%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea {
+    min-height: 200px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #0069d9;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 0.5rem;
+}
+
+/* 博客文章卡片 */
+.post-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    position: relative;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(74, 108, 247, 0.1);
+}
+
+.post-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.post-card:hover:before {
+    opacity: 1;
+}
+
+.post-card h2 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.post-card h2 a {
+    background: linear-gradient(to right, #4a6cf7, #4a6cf7);
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.post-card h2 a:hover {
+    background-size: 100% 2px;
+}
+
+.post-meta {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.post-excerpt {
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+    color: #495057;
+    position: relative;
+    overflow: hidden;
+    max-height: 4.8em;
+    transition: all 0.3s ease;
+}
+
+.read-more {
+    display: inline-block;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+    color: #4a6cf7;
+}
+
+.read-more:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #4a6cf7;
+    transition: width 0.3s ease;
+}
+
+.read-more:hover:after {
+    width: 100%;
+}
+
+.read-more:hover {
+    transform: translateX(5px);
+}
+
+/* 单篇博客文章页面 */
+.post-header {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(74, 108, 247, 0.1) 0%, rgba(74, 108, 247, 0.05) 100%);
+}
+
+.post-header h1 {
+    margin-bottom: 0.5rem;
+}
+
+.post-content {
+    line-height: 1.8;
+}
+
+/* 首页样式 */
+.hero {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero:before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(74, 108, 247, 0.1) 0%, rgba(74, 108, 247, 0.05) 100%);
+    z-index: 0;
+}
+
+.hero:after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(74, 108, 247, 0.05) 0%, rgba(74, 108, 247, 0.02) 100%);
+    z-index: 0;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 1;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.hero p {
+    font-size: 1.4rem;
+    color: #6c757d;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 20px rgba(74, 108, 247, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(135deg, #2b4acb 0%, #1a2f8a 100%);
+    transition: all 0.5s ease;
+    z-index: -1;
+    border-radius: 50px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(74, 108, 247, 0.4);
+    text-decoration: none;
+}
+
+.btn:hover:before {
+    width: 100%;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 5rem;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    animation: float 6s infinite ease-in-out;
+    animation-delay: calc(var(--animation-order, 0) * 0.2s);
+}
+
+.feature-card:nth-child(1) {
+    --animation-order: 1;
+}
+
+.feature-card:nth-child(2) {
+    --animation-order: 2;
+}
+
+.feature-card:nth-child(3) {
+    --animation-order: 3;
+}
+
+.feature-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6cf7 0%, #2b4acb 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(74, 108, 247, 0.1);
+}
+
+.feature-card:hover:before {
+    transform: scaleX(1);
+}
+
+.feature-card h2 {
+    margin-bottom: 1.5rem;
+    color: #343a40;
+    font-weight: 600;
+    font-size: 1.5rem;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.feature-card h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #4a6cf7 0%, rgba(74, 108, 247, 0.2) 100%);
+    border-radius: 3px;
+}
+
+.latest-posts {
+    margin-bottom: 3rem;
+}
+
+.latest-posts h2 {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f8f9fa;
+    padding-bottom: 0.5rem;
+}
+
+/* 编辑器样式 */
+.post-editor {
+    display: flex;
+    flex-direction: column;
+    max-width: 98%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.post-editor h1 {
+    display: none; /* 隐藏标题栏 */
+}
+
+/* 左右分栏布局 */
+.split-editor-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.03);
+    height: calc(100vh - 150px);
+    width: 100%;
+}
+
+.editor-pane {
+    flex: 1.2;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #fff;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    overflow: auto;
+}
+
+.preview-pane {
+    flex: 0.8;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #fff;
+    min-height: 550px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.editor-pane:hover, .preview-pane:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.editor-pane h3, .preview-pane h3 {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.editor-pane .CodeMirror {
+    height: 100%;
+    min-height: 500px;
+    font-family: 'Fira Code', monospace, 'Courier New', Courier;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.preview-pane .markdown-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #f0f2f5;
+}
+
+.preview-container {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+#editor-container {
+    margin-bottom: 1rem;
+}
+
+.editor-sidebar {
+    width: 150px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #f8f9fa;
+    border-radius: 0 6px 6px 0;
+    border-left: 1px solid #e9ecef;
+}
+
+.editor-sidebar button,
+.editor-sidebar .btn {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.editor-sidebar button:hover,
+.editor-sidebar .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.markdown-tips {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.markdown-tips summary {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.tips-content {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.tips-content p {
+    margin-bottom: 0.5rem;
+}
+/* SimpleMDE编辑器工具栏样式 */
+.editor-toolbar {
+    border: 1px solid #e9ecef;
+    border-radius: 6px 6px 0 0;
+    background-color: #f8f9fa;
+    padding: 8px 4px;
+    opacity: 1;
+}
+
+.editor-toolbar button {
+    position: relative;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    margin: 0 3px;
+}
+
+.editor-toolbar button:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+}
+
+.editor-toolbar button.active {
+    background-color: #e2e6ea;
+    color: #007bff;
+}
+
+.editor-toolbar button:after {
+    content: attr(title);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.editor-toolbar button:hover:after {
+    opacity: 1;
+}
+
+.CodeMirror {
+    border: 1px solid #e9ecef;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    padding: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+    
+    nav ul {
+        margin-top: 1rem;
+    }
+    
+    nav ul li {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    
+    .form-container {
+        padding: 1rem;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 在小屏幕上将编辑器改为上下布局 */
+    .split-editor-layout {
+        flex-direction: column;
+    }
+    
+    .editor-pane, .preview-pane {
+        min-height: 300px;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    .btn {
+        padding: 0.8rem 2rem;
+    }
+}
+/* 博客列表页面样式改进 */
+.blog-posts {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.blog-posts h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    color: #343a40;
+}
+
+.blog-posts h1:after {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    border-radius: 3px;
+}
+
+#posts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.post-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(74, 108, 247, 0.1);
+}
+
+.post-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.post-card:hover:before {
+    opacity: 1;
+}
+
+.post-card h2 {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.3;
+}
+
+.post-card h2 a {
+    color: #343a40;
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, #4a6cf7, #4a6cf7);
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+}
+
+.post-card h2 a:hover {
+    color: #4a6cf7;
+    background-size: 100% 2px;
+}
+
+.post-meta {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.post-meta:before {
+    content: '📅';
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.post-excerpt {
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+    color: #495057;
+    position: relative;
+    overflow: hidden;
+    max-height: 6em;
+    flex-grow: 1;
+}
+
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+    color: #4a6cf7;
+    margin-top: auto;
+}
+
+.read-more:after {
+    content: '→';
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.read-more:hover:after {
+    transform: translateX(5px);
+}
+
+/* 响应式设计优化 */
+@media (max-width: 768px) {
+    #posts-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .blog-posts h1 {
+        font-size: 2rem;
+    }
+    
+    .post-card {
+        padding: 1.5rem;
+    }
+}
+
+/* 博客详情页美化 */
+.blog-post-container {
+    max-width: 900px;
+    margin: 2rem auto 4rem;
+    padding: 0 1.5rem;
+}
+
+.blog-post {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-post:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #1a202c;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.post-meta-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.post-reading-time {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    background-color: rgba(74, 108, 247, 0.08);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.post-reading-time:before {
+    content: '⏱️';
+    margin-right: 0.5rem;
+}
+
+.post-divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(74, 108, 247, 0.2), rgba(74, 108, 247, 0.1), transparent);
+    margin-bottom: 2rem;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #495057;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.btn-back:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    transform: translateY(-2px);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+}
+
+.btn-icon {
+    display: inline-block;
+    margin-right: 0.3rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-back:hover .btn-icon {
+    transform: translateX(-3px);
+}
+
+.btn-edit:hover .btn-icon {
+    transform: rotate(15deg);
+}
+
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.prev-post, .next-post {
+    max-width: 45%;
+}
+
+.prev-post a, .next-post a {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #495057;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.prev-post a:hover, .next-post a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+}
+
+.post-nav-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.prev-post .post-nav-label:before {
+    content: '←';
+    margin-right: 0.5rem;
+}
+
+.next-post .post-nav-label:after {
+    content: '→';
+    margin-left: 0.5rem;
+}
+
+.post-nav-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #343a40;
+}
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.post-tag {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(74, 108, 247, 0.08);
+    color: #4a6cf7;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.post-tag:hover {
+    background-color: rgba(74, 108, 247, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .blog-post {
+        padding: 1.5rem;
+    }
+    
+    .post-title {
+        font-size: 1.8rem;
+    }
+    
+    .post-meta-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .post-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .post-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .prev-post, .next-post {
+        max-width: 100%;
+    }
+    
+    /* Admin Dashboard 响应式 */
+    .admin-dashboard {
+        padding: 1rem;
+    }
+    
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-card {
+        margin-bottom: 1rem;
+    }
+    
+    .admin-table {
+        font-size: 0.85rem;
+    }
+    
+    .admin-table th, .admin-table td {
+        padding: 0.5rem;
+    }
+    
+    .action-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+        margin: 0.1rem;
+    }
+    
+    .language-switch {
+        margin: 0.5rem 0;
+    }
+    
+    .language-dropdown {
+        position: static;
+        box-shadow: none;
+        border: 1px solid #eee;
+        margin-top: 0.5rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.blog-post {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Admin Dashboard 样式 */
+.admin-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.admin-dashboard h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #2b4acb;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.admin-dashboard h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    border-radius: 2px;
+}
+
+.admin-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(74, 108, 247, 0.1);
+}
+
+.admin-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.admin-card:hover:before {
+    transform: scaleX(1);
+}
+
+.admin-card-title {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card-change {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.admin-card-change.positive {
+    color: #28a745;
+}
+
+.admin-card-change.negative {
+    color: #dc3545;
+}
+
+.admin-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.admin-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+    position: relative;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.admin-section h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    border-radius: 2px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 1rem;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.admin-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.admin-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+.admin-table tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.admin-table tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+.admin-table tr:hover td {
+    background-color: rgba(74, 108, 247, 0.03);
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 0.5rem 0.8rem;
+    margin: 0.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 按钮样式 */
+.delete-post, .delete-user {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-post:hover, .delete-user:hover {
+    background-color: #c82333;
+}
+
+.toggle-admin {
+    background-color: #6c757d;
+    color: white;
+}
+
+.toggle-admin:hover {
+    background-color: #5a6268;
+}
+
+.toggle-active {
+    background-color: #28a745;
+    color: white;
+}
+
+.toggle-active:hover {
+    background-color: #218838;
+}
+
+/* 状态标签 */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge.published {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-badge.draft {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.status-badge.active {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-badge.inactive {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.status-badge.admin {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: #4a6cf7;
+}
+
+/* 语言切换样式 */
+.language-switch {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0;
+    min-width: 120px;
+    z-index: 100;
+    display: none;
+}
+
+.language-dropdown.show {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.language-dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    transition: background-color 0.2s ease;
+}
+
+.language-dropdown a:hover {
+    background-color: #f5f5f5;
+    color: #4a6cf7;
+}
+
+#language-toggle {
+    display: flex;
+    align-items: center;
+}
+
+#language-toggle:after {
+    content: '▼';
+    font-size: 0.7em;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+#language-toggle:hover:after {
+    transform: translateY(2px);
+}
+
+/* 博客列表页面样式改进 */
+.blog-posts {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.blog-posts h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    color: #343a40;
+}
+
+.blog-posts h1:after {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    border-radius: 3px;
+}
+
+#posts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.post-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(74, 108, 247, 0.1);
+}
+
+.post-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.post-card:hover:before {
+    opacity: 1;
+}
+
+.post-card h2 {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.3;
+}
+
+.post-card h2 a {
+    color: #343a40;
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, #4a6cf7, #4a6cf7);
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+}
+
+.post-card h2 a:hover {
+    color: #4a6cf7;
+    background-size: 100% 2px;
+}
+
+/* 博客标签和阅读时间样式 */
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-tag {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: #4a6cf7;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.post-tag:hover {
+    background-color: rgba(74, 108, 247, 0.2);
+    transform: translateY(-2px);
+}
+
+.reading-time {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+    color: #6c757d;
+    display: inline-flex;
+    align-items: center;
+}
+
+.reading-time:before {
+    content: '⏱️';
+    margin-right: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.post-meta {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.post-meta:before {
+    content: '📅';
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.post-excerpt {
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+    color: #495057;
+    position: relative;
+    overflow: hidden;
+    max-height: 6em;
+    flex-grow: 1;
+}
+
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+    color: #4a6cf7;
+    margin-top: auto;
+}
+
+.read-more:after {
+    content: '→';
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.read-more:hover:after {
+    transform: translateX(5px);
+}
+
+/* 响应式设计优化 */
+@media (max-width: 768px) {
+    #posts-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .blog-posts h1 {
+        font-size: 2rem;
+    }
+    
+    .post-card {
+        padding: 1.5rem;
+    }
+}
+
+/* 博客详情页美化 */
+.blog-post-container {
+    max-width: 900px;
+    margin: 2rem auto 4rem;
+    padding: 0 1.5rem;
+}
+
+.blog-post {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-post:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+}
+
+.post-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #1a202c;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.post-meta-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.post-reading-time {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    background-color: rgba(74, 108, 247, 0.08);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.post-reading-time:before {
+    content: '⏱️';
+    margin-right: 0.5rem;
+}
+
+.post-divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(74, 108, 247, 0.2), rgba(74, 108, 247, 0.1), transparent);
+    margin-bottom: 2rem;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #495057;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.btn-back:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    transform: translateY(-2px);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #4a6cf7 0%, #2b4acb 100%);
+}
+
+.btn-icon {
+    display: inline-block;
+    margin-right: 0.3rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-back:hover .btn-icon {
+    transform: translateX(-3px);
+}
+
+.btn-edit:hover .btn-icon {
+    transform: rotate(15deg);
+}
+
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.prev-post, .next-post {
+    max-width: 45%;
+}
+
+.prev-post a, .next-post a {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #495057;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.prev-post a:hover, .next-post a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+}
+
+.post-nav-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+}
+
+.prev-post .post-nav-label:before {
+    content: '←';
+    margin-right: 0.5rem;
+}
+
+.next-post .post-nav-label:after {
+    content: '→';
+    margin-left: 0.5rem;
+}
+
+.post-nav-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #343a40;
+}
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.post-tag {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(74, 108, 247, 0.08);
+    color: #4a6cf7;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.post-tag:hover {
+    background-color: rgba(74, 108, 247, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .blog-post {
+        padding: 1.5rem;
+    }
+    
+    .post-title {
+        font-size: 1.8rem;
+    }
+    
+    .post-meta-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .post-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .post-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .prev-post, .next-post {
+        max-width: 100%;
+    }
+    
+    /* Admin Dashboard 响应式 */
+    .admin-dashboard {
+        padding: 1rem;
+    }
+    
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-card {
+        margin-bottom: 1rem;
+    }
+    
+    .admin-table {
+        font-size: 0.85rem;
+    }
+    
+    .admin-table th, .admin-table td {
+        padding: 0.5rem;
+    }
+    
+    .action-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+        margin: 0.1rem;
+    }
+    
+    .language-switch {
+        margin: 0.5rem 0;
+    }
+    
+    .language-dropdown {
+        position: static;
+        box-shadow: none;
+        border: 1px solid #eee;
+        margin-top: 0.5rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.blog-post {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Admin Dashboard 样式 */
+.admin-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.admin-dashboard h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #2b4acb;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.admin-dashboard h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    border-radius: 2px;
+}
+
+.admin-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(74, 108, 247, 0.1);
+}
+
+.admin-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.admin-card:hover:before {
+    transform: scaleX(1);
+}
+
+.admin-card-title {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 0.5rem;
+}
+
+.admin-card-change {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.admin-card-change.positive {
+    color: #28a745;
+}
+
+.admin-card-change.negative {
+    color: #dc3545;
+}
+
+.admin-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.admin-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+    position: relative;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.admin-section h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #4a6cf7, rgba(74, 108, 247, 0.2));
+    border-radius: 2px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 1rem;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.admin-table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.admin-table th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+.admin-table tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.admin-table tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+.admin-table tr:hover td {
+    background-color: rgba(74, 108, 247, 0.03);
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 0.5rem 0.8rem;
+    margin: 0.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 按钮样式 */
+.delete-post, .delete-user {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-post:hover, .delete-user:hover {
+    background-color: #c82333;
+}
+
+.toggle-admin {
+    background-color: #6c757d;
+    color: white;
+}
+
+.toggle-admin:hover {
+    background-color: #5a6268;
+}
+
+.toggle-active {
+    background-color: #28a745;
+    color: white;
+}
+
+.toggle-active:hover {
+    background-color: #218838;
+}
+
+/* 状态标签 */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge.published {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-badge.draft {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.status-badge.active {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.status-badge.inactive {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.status-badge.admin {
+    background-color: rgba(74, 108, 247, 0.1);
+    color: #4a6cf7;
+}
+
+/* 语言切换样式 */
+.language-switch {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0;
+    min-width: 120px;
+    z-index: 100;
+    display: none;
+}
+
+.language-dropdown.show {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.language-dropdown a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    transition: background-color 0.2s ease;
+}
+
+.language-dropdown a:hover {
+    background-color: #f5f5f5;
+    color: #4a6cf7;
+}
+
+#language-toggle {
+    display: flex;
+    align-items: center;
+}
+
+#language-toggle:after {
+    content: '▼';
+    font-size: 0.7em;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+#language-toggle:hover:after {
+    transform: translateY(2px);
+}

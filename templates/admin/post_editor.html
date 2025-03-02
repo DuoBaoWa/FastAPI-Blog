@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}Post Editor - FastAPI Blog{% endblock %}
+
+{% block content %}
+<div class="post-editor">
+    <h1 id="editor-title">Create New Post</h1>
+    
+    <form id="post-form" class="form-container">
+        <div class="form-group">
+            <label for="post-title">Title</label>
+            <input type="text" id="post-title" name="title" required>
+        </div>
+        
+        <div class="form-group">
+            <label class="checkbox-label">
+                <input type="checkbox" id="post-published" name="published" checked>
+                Publish immediately
+            </label>
+        </div>
+        
+        <div class="editor-container">
+            <div class="split-editor-layout">
+                <div class="editor-pane">
+                    <h3>Editor (Markdown)</h3>
+                    <textarea id="post-content" name="content"></textarea>
+                </div>
+                
+                <div class="preview-pane">
+                    <h3>Preview</h3>
+                    <div id="markdown-preview" class="markdown-content"></div>
+                </div>
+                
+                <div class="editor-sidebar">
+                    <button type="submit" id="submit-btn">Save Post</button>
+                    <a href="/admin" class="btn btn-secondary">Cancel</a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- 使用更可靠的 CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js"></script>
+
+<script>
+let editor;
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("初始化编辑器...");
+    
+    try {
+        // 初始化SimpleMDE编辑器
+        editor = new SimpleMDE({ 
+            element: document.getElementById('post-content'),
+            spellChecker: false,
+            autosave: {
+                enabled: true,
+                uniqueId: 'blog-post-editor',
+                delay: 1000,
+            },
+            // 禁用内置预览，因为我们使用自定义预览
+            toolbar: [
+                'bold', 'italic', 'heading', '|', 
+                'quote', 'unordered-list', 'ordered-list', '|',
+                'link', 'image', '|', 
+                'code', 'table', '|',
+                'fullscreen'
+            ],
+            status: false
+        });
+        
+        console.log("编辑器已初始化");
+        
+        // 立即初始渲染预览
+        const initialContent = editor.value();
+        document.getElementById('markdown-preview').innerHTML = renderMarkdown(initialContent);
+        
+        // 为预览更新添加事件
+        editor.codemirror.on("change", function(){
+            const content = editor.value();
+            document.getElementById('markdown-preview').innerHTML = renderMarkdown(content);
+            
+            // 如果有代码块，应用高亮
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('#markdown-preview pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        });
+    } catch(e) {
+        console.error("编辑器初始化失败:", e);
+        alert("编辑器加载失败，请刷新页面重试");
+    }
+    
+    // 检查用户是否是管理员
+    checkAdminAccess();
+    
+    // 获取帖子 ID（如果有）
+    const urlParts = window.location.pathname.split('/');
+    const postId = urlParts.includes('edit') ? urlParts[urlParts.indexOf('edit') - 1] : null;
+    
+    // 如果是编辑模式，加载帖子数据
+    if (postId) {
+        document.getElementById('editor-title').textContent = 'Edit Post';
+        loadPost(postId);
+    }
+    
+    // 添加表单提交处理
+    const form = document.getElementById('post-form');
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        console.log("提交表单...");
+        
+        // 获取表单数据
+        const title = document.getElementById('post-title').value;
+        const content = editor ? editor.value() : document.getElementById('post-content').value;
+        const published = document.getElementById('post-published').checked;
+        
+        // 手动验证
+        if (!title.trim()) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = '标题不能为空';
+            errorElement.style.display = 'block';
+            return;
+        }
+        
+        if (!content.trim()) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = '内容不能为空';
+            errorElement.style.display = 'block';
+            return;
+        }
+        
+        console.log("表单数据:", { title, contentLength: content.length, published });
+        
+        // 创建或更新帖子
+        if (postId) {
+            await updatePost(postId, { title, content, published });
+        } else {
+            await createPost({ title, content, published });
+        }
+    });
+});
+
+async function checkAdminAccess() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.log("未找到令牌，重定向到登录页");
+        window.location.href = '/login';
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/users/me', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        console.log("获取用户信息状态:", response.status);
+        
+        if (!response.ok) {
+            throw new Error('获取用户信息失败');
+        }
+        
+        const userData = await response.json();
+        console.log("用户信息:", userData);
+        
+        if (!userData.is_admin) {
+            console.log("用户不是管理员，重定向到首页");
+            window.location.href = '/';
+        }
+    } catch (error) {
+        console.error('错误:', error);
+        window.location.href = '/login';
+    }
+}
+
+async function loadPost(postId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`/api/posts/${postId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('获取文章失败');
+        }
+        
+        const post = await response.json();
+        
+        // 填充表单
+        document.getElementById('post-title').value = post.title;
+        if (editor) {
+            editor.value(post.content); // 设置编辑器内容
+        } else {
+            document.getElementById('post-content').value = post.content;
+        }
+        document.getElementById('post-published').checked = post.published;
+        
+        // 更新预览
+        document.getElementById('markdown-preview').innerHTML = renderMarkdown(post.content);
+        
+        // 如果有代码块，应用高亮
+        if (typeof hljs !== 'undefined') {
+            document.querySelectorAll('#markdown-preview pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+    } catch (error) {
+        console.error('加载文章错误:', error);
+        document.getElementById('error-message').textContent = '加载文章失败，请稍后重试。';
+        document.getElementById('error-message').style.display = 'block';
+    }
+}
+
+async function createPost(postData) {
+    const token = localStorage.getItem('token');
+    const errorElement = document.getElementById('error-message');
+    
+    try {
+        console.log("创建文章...");
+        console.log("发送数据:", JSON.stringify(postData));
+        
+        const response = await fetch('/api/posts', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+        
+        console.log("创建文章响应状态:", response.status);
+        
+        const responseData = await response.json();
+        console.log("响应数据:", responseData);
+        
+        if (!response.ok) {
+            throw new Error(responseData.detail || responseData.error || '创建文章失败');
+        }
+        
+        // 成功
+        alert("文章发布成功！");
+        
+        // 重定向到管理面板
+        window.location.href = '/admin';
+    } catch (error) {
+        console.error('创建文章错误:', error);
+        errorElement.textContent = error.message;
+        errorElement.style.display = 'block';
+        
+        // 控制台显示更详细的调试信息
+        console.error('详细错误:', {
+            message: error.message,
+            stack: error.stack
+        });
+    }
+}
+
+async function updatePost(postId, postData) {
+    const token = localStorage.getItem('token');
+    const errorElement = document.getElementById('error-message');
+    
+    try {
+        console.log("更新文章...");
+        
+        const response = await fetch(`/api/posts/${postId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+        
+        console.log("更新文章响应状态:", response.status);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || errorData.error || '更新文章失败');
+        }
+        
+        // 成功
+        alert("文章更新成功！");
+        
+        // 重定向到管理面板
+        window.location.href = '/admin';
+    } catch (error) {
+        console.error('更新文章错误:', error);
+        errorElement.textContent = error.message;
+        errorElement.style.display = 'block';
+        
+        // 控制台显示更详细的调试信息
+        console.error('详细错误:', {
+            message: error.message,
+            stack: error.stack
+        });
+    }
+}
+</script>
+{% endblock %}
